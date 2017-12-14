@@ -1,4 +1,7 @@
+from django.db.models import Count
 from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework import status
@@ -7,12 +10,12 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .services import serve_book_buying
 from .models import Book
 from .serializers import (
     BookShortForAnonSerializer, BookShortForAuthorizedSerializer,
     BookDetailForAnonSerializer, BookDetailForAuthorizedSerializer,
 )
+from .services import serve_book_buying
 
 
 class BookList(generics.ListAPIView):
@@ -54,3 +57,16 @@ class BoughtByUserBookList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return user.profile.bought_books.all()
+
+
+class TopBookList(generics.ListAPIView):
+    serializer_class = BookShortForAnonSerializer
+
+    def get_queryset(self):
+        return Book.objects.annotate(num_sold=Count('buyers')).order_by('-num_sold')
+
+    # TODO: replace with schedule-based caching to fit requirements
+    #       (celery beat task + redis)
+    @method_decorator(cache_page(60 * 60 * 24))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
