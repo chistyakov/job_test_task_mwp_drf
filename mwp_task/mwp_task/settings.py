@@ -74,6 +74,7 @@ WSGI_APPLICATION = 'mwp_task.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# TODO: move to postgres
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
