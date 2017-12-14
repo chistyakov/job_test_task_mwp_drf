@@ -3,7 +3,10 @@ from rest_framework import generics
 from rest_framework.filters import SearchFilter
 
 from .models import Book
-from .serializers import BookShortForAnonSerializer, BookShortForAuthorizedSerializer
+from .serializers import (
+    BookShortForAnonSerializer, BookShortForAuthorizedSerializer,
+    BookDetailForAnonSerializer, BookDetailForAuthorizedSerializer,
+)
 
 
 class BookList(generics.ListAPIView):
@@ -16,3 +19,12 @@ class BookList(generics.ListAPIView):
         if self.request.user.is_anonymous:
             return BookShortForAnonSerializer
         return BookShortForAuthorizedSerializer
+
+
+class BookDetail(generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.user.is_anonymous:
+            return BookDetailForAnonSerializer
+        return BookDetailForAuthorizedSerializer

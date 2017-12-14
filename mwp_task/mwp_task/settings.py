@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'bookstore',
     'phonenumber_field',
-    'django_prices',
     'django_filters',
 ]
 

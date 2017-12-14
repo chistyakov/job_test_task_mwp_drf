@@ -1,9 +1,10 @@
+from decimal import Decimal
+
 from django.contrib.auth.models import User
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, MinValueValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django_prices.models import PriceField
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -24,7 +25,7 @@ class Book(models.Model):
     photo = models.ImageField(upload_to='book', null=True, blank=True)  # TODO: store images in Amazon S3
     name = models.CharField(max_length=255)
     description = models.TextField()
-    price = PriceField('Price', currency='BTC', max_digits=12, decimal_places=2)
+    price = models.DecimalField(max_digits=12, decimal_places=2, validators=(MinValueValidator(Decimal('0')), ))
     link = models.URLField()
 
     def __str__(self):
@@ -59,4 +60,3 @@ class Card(models.Model):
 
     def __str__(self):
         return str(self.name)
-
