@@ -11,6 +11,7 @@ ENV DEBUG=1
 ENV SUPERUSERNAME=admin
 ENV SUPERUSEREMAIL=al.ol.chistyakov@gmail.com
 ENV SUPERUSERPASSWORD=password
+ENV PAYMENT_GETWAY_URL=http://www.mocky.io/v2/5a3134e52e00008118e3b3c6
 
 WORKDIR mwp_task
 RUN python3 manage.py migrate

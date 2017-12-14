@@ -1,7 +1,7 @@
-from .base_api_test import BookstoreAPITestCase
+from .base_api_test import BookstoreBaseAPITestCase
 
 
-class GetBooksDetailTest(BookstoreAPITestCase):
+class GetBooksDetailTestBase(BookstoreBaseAPITestCase):
     def test_get_books_by_anon(self):
         response = self.client.get('/books/1/')
         self.assertEqual(response.status_code, 200)

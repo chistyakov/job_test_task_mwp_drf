@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 
 
-class BookstoreAPITestCase(APITestCase):
+class BookstoreBaseAPITestCase(APITestCase):
     def setUp(self):
         uncle_bob = Author(name='Robert', surname='Martin')
         uncle_bob.save()
@@ -60,6 +60,8 @@ class BookstoreAPITestCase(APITestCase):
         aapostle = User(username='aapostle', email='Andrew@apostle.xxx')
         aapostle.set_password('password')
         aapostle.save()
+
+        achistyakov.profile.cards.create(name='VISA***1111', payment_number='1111-1111-1111-1111')
 
     def tearDown(self):
         self.client.logout()
