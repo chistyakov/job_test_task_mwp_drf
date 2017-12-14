@@ -119,3 +119,8 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'  # TODO: use the Amazon S3 storage
 MEDIA_ROOT = os.path.join(BASE_DIR, "media_root")
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
