@@ -45,3 +45,12 @@ def buy_book(request, book_id):
     # TODO: replace with async request to the payment gateway with status push/polling
     serve_book_buying(book, user, card_name)
     return Response(status=status.HTTP_200_OK)
+
+
+class BoughtByUserBookList(generics.ListAPIView):
+    serializer_class = BookShortForAuthorizedSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return user.profile.bought_books.all()
