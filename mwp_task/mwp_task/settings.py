@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'bookstore',
+    'phonenumber_field',
+    'django_prices',
 ]
 
 MIDDLEWARE = [
