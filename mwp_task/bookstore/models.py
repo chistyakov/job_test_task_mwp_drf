@@ -13,7 +13,10 @@ class Author(models.Model):
     photo = models.ImageField(upload_to='author')  # TODO: store images in Amazon S3
 
     def __str__(self):
-        return f'{self.name} {self.surname}'
+        if self.surname:
+            return f'{self.name} {self.surname}'
+        else:
+            return self.name
 
 
 class Book(models.Model):

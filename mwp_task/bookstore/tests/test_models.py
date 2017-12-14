@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from .models import Author, Book
+from bookstore.models import Author, Book
 
 
 class AuthorModelTest(TestCase):
@@ -15,9 +15,8 @@ class AuthorModelTest(TestCase):
 
 class ProfileModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
-            username='alobachev', email='artem@mwptech.com', password='password',
-        )
+        self.user = User.objects.create_user(username='alobachev', email='artem@mwptech.com')
+        self.user.set_password('password')
         self.user.save()
         self.user.profile.save()
 
